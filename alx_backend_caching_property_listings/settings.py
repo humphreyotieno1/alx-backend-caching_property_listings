@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'alx_backend_caching_property_listings.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'property_db',
+        'USER': 'property_user',
+        'PASSWORD': 'property_pass',
+        'HOST': 'localhost',
+        'PORT': 5433,  # Changed from 5432 to 5433
     }
 }
 
@@ -122,3 +126,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Cache settings
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://localhost:6380/1',  # Changed port from 6379 to 6380
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
